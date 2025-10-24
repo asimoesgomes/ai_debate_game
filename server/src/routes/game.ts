@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db } from "..";
 import { DebateTranscript, PlayerFeedback, PreparedPosition, RoundResult, StageMode } from "../game/types";
-import { addAnswer, createEmptyPrepared, nextQuestion, isComplete } from "../game/socratic";
+import { addAnswer, createEmptyPrepared, nextQuestion, isComplete, SocraticQuestion } from "../game/socratic";
 import { buildDebateTranscript, computeVotesAndScores, generateFeedback } from "../game/sim";
 
 export const router = Router();
@@ -23,7 +23,7 @@ router.post("/prepare/answer", (req, res) => {
   const { playerId, topicId, key, answer } = req.body as {
     playerId: string;
     topicId: string;
-    key: ReturnType<typeof nextQuestion>["key"] | string;
+    key: SocraticQuestion["key"] | string;
     answer: string;
   };
   const player = db.players.get(playerId);
